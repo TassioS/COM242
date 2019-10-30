@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from tkinter import *
+from tkinter import filedialog,messagebox,Tk
+import os
 
 #Selecionar diretorio
 def selectDir():
@@ -26,7 +27,16 @@ def saveDir(path):
     arq.write(path)
 
 def confirmaDir(path):
-    MsgBox = messagebox.askquestion ('Confirmar diretório','O diretorio para compartilhamento de arquivos esta correto?\n'+path,icon = 'warning')
+    root = Tk()
+    root.withdraw()
+    MsgBox = messagebox.askquestion ('Confirmar diretório','O diretorio para compartilhamento de mídias esta correto?\n'+path,icon = 'warning')
     if MsgBox == 'no':
         messagebox.showinfo('Selecionar novo diretório','Favor selecionar o diretório correto.')
-        saveDir(selectDir())
+        txt = selectDir()
+        saveDir(txt)
+        return txt
+    else: return path
+    
+def listaMidias(path):
+    lista = os.listdir(path)
+    return lista

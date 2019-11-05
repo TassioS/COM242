@@ -90,10 +90,10 @@ def getFilialPos():
 
 def pyroBusca(filial):
     try:
-        print(filial['ip'],filial['pyroPort'])
-        ns = naming.locateNS(filial['ip'],filial['pyroPort'])
-        metodo = ns.Proxy("PYRONAME:"+filial['ip'])
-        return metodo.getListaMidias()
+        ns = Pyro4.locateNS(filial['ip'],filial['pyroPort'])
+        uri = ns.lookup(filial['ip'])
+        metodos = Pyro4.Proxy(uri)
+        return metodos.getListaMidias()
     except Exception as e:
         print(str(e))
     

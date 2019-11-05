@@ -7,6 +7,7 @@ import socket
 import tkinter as tk
 import time
 from Pyro4  import naming,Proxy
+import Pyro4
 
 
 #Selecionar diretorio
@@ -90,11 +91,11 @@ def getFilialPos():
 def pyroBusca(filial):
     try:
         print(filial['ip'],filial['pyroPort'])
-        naming.locateNS(filial['ip'],filial['pyroPort'])
-        metodo = Proxy("PYRONAME:"+filial['ip'])
+        ns = naming.locateNS(filial['ip'],filial['pyroPort'])
+        metodo = ns.Proxy("PYRONAME:"+filial['ip'])
         return metodo.getListaMidias()
-    except:
-        return 0
+    except Exception as e:
+        print(str(e))
     
   
 def selecionaMidia(filial):

@@ -11,10 +11,11 @@ class metodos():
     def getListaMidias(self):
         return utils.listaMidias()
 
+jsonL = utils.abrirJson()
 #Gera um daemon(Servidor)
-daemon = Pyro4.Daemon(utils.getIP(),8256)
+daemon = Pyro4.Daemon(utils.getIP())
 #Localiza Nameserver
-ns = Pyro4.locateNS()
+ns = Pyro4.locateNS(utils.getIP(),jsonL['filial'][0]['pyroPort'])
 #Registra a classe metodos no com um URI(assinatura para a localizar o objeto) no  daemon
 uri = daemon.register(metodos)
 #registra o uri no nameserver

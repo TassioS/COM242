@@ -89,6 +89,7 @@ def getFilialPos():
 
 def pyroBusca(filial):
     try:
+        print(filial['ip'],filial['pyroPort'])
         naming.locateNS(filial['ip'],filial['pyroPort'])
         metodo = Proxy("PYRONAME:"+filial['ip'])
         return metodo.getListaMidias()

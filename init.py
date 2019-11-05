@@ -53,7 +53,8 @@ def main():
     #ftpProcess.join()
     
     window.mainloop()
-    pyroProcess.join()
+    #pyroProcess.join()
+    pyroProcess.terminate()
 #Define a função main
 if __name__ == "__main__":
     main()

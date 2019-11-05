@@ -15,7 +15,7 @@ jsonL = utils.abrirJson()
 #Gera um daemon(Servidor)
 daemon = Pyro4.Daemon(utils.getIP())
 #Localiza Nameserver
-ns = Pyro4.locateNS(utils.getIP(),jsonL['filial'][0]['pyroPort'])
+ns = Pyro4.locateNS(utils.getIP(),jsonL['filial'][utils.getFilialPos()]['pyroPort'])
 #Registra a classe metodos no com um URI(assinatura para a localizar o objeto) no  daemon
 uri = daemon.register(metodos)
 #registra o uri no nameserver

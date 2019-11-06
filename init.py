@@ -4,6 +4,7 @@ import utils
 import subprocess
 import multiprocessing
 from tkinter import *
+from tkinter import ttk
 
 def iniciaPyroServer():
     comando = "connect.py"
@@ -16,20 +17,49 @@ def iniciaFtpServer():
 window = Tk()
 
 
+def exibeMidia(filial,top):
+        windowLista = Toplevel(top)
+        windowLista.geometry("300x300")
+        lb = Label(windowLista,text="Midias Disponíveis em: "+filial['name'])
+        midias = []
+        i= 0
+        def addMidias():
+            midias.append(cmb.get())
+            listb1.insert(i,cmb.get())
+            self.i = i+1
+            
+        btn1 = Button(windowLista,text="Adicionar",command=addMidias)
+        
+        listb1 = Listbox(windowLista)
+        cmb = ttk.Combobox(windowLista)
+        
+        
+        retorno = utils.pyroBusca(filial)
+        if(retorno != 0):
+            cmb.configure(values=retorno)
+        else:
+            cmb.configure(values=['Erro ao buscar midias'])
+
+        btn = Button(windowLista,text="Baixar",command=lambda arg=midias,arg1=filial: utils.baixaMidia(arg,arg1))
+        
+        
+        lb.pack()
+        btn1.pack()
+        cmb.current(0)
+        cmb.pack()
+        listb1.pack()
+        btn.pack()
+        windowLista.mainloop()
+        
 
 def midias():
     windowFilial = Toplevel(window)
-    windowFilial.geometry("300x200")    
+    windowFilial.geometry("400x250")    
     Label(windowFilial, text="Midias disponíveis").pack()
-    
-    for filial in utils.abrirJson()['filial']:
-        if filial['ip'] != utils.getIP():
-            retorno = utils.pyroBusca(filial)
-            if retorno == 0:
-                continue
-            else:
-                print(retorno)
-    
+    jsonL = utils.abrirJson()['filial']
+    for filial in jsonL:
+        Button(windowFilial,text= filial['name'],command=lambda arg=filial,arg1=windowFilial: exibeMidia(arg,arg1)).pack()
+    windowFilial.mainloop()
 
 
 def main():

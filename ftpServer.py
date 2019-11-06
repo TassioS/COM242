@@ -17,5 +17,5 @@ for filial in jsonL['filial']:
 handler = FTPHandler
 handler.authorizer = authorizer
 
-server = FTPServer((utils.getIP(), 7777), handler)
+server = FTPServer((utils.getIP(), jsonL['filial'][utils.getFilialPos()]['ftpPort']), handler)
 server.serve_forever()

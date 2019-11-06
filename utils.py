@@ -5,9 +5,9 @@ import os
 import json
 import socket
 import tkinter as tk
-import time
 from Pyro4  import naming,Proxy
 import Pyro4
+from ftplib import FTP
 
 
 #Selecionar diretorio
@@ -32,8 +32,6 @@ def saveDir(path):
     dados = abrirJson()
     dados['filial'][getFilialPos()]['diretorio'] = path
     salvarJson(dados)
-    """arq = open("dir.txt","w")
-    arq.write(path)"""
 
 def confirmaDir(dados):
     #root = Tk()
@@ -66,11 +64,6 @@ def salvarJson(dados):
         json.dump(dados,json_file)
         json_file.close()
 
-"""def preencheMidiasJson():
-    jsonL = abrirJson()
-    jsonL['filial'][getFilialPos()]['midias'] = listaMidias()
-    salvarJson(jsonL)"""
-    
 
 def iniciaDir():
     #checando se existe diretorio definido
@@ -94,9 +87,25 @@ def pyroBusca(filial):
         uri = ns.lookup(filial['ip'])
         metodos = Pyro4.Proxy(uri)
         return metodos.getListaMidias()
+
     except Exception as e:
         print(str(e))
+        return 0
     
   
 def selecionaMidia(filial):
     print(filial)
+
+def baixaMidia(nomeMidia,filial):
+    ftp = FTP('')
+    ftp.connect('localhost',1026)
+    ftp.login()
+    
+    tmp_a = os.getcwd()
+    os.chdir(abrirJson['filial'][getFilialPos]['diretorio'])
+    for midia in nomeMidia:
+        arqLocal = open(midia, 'wb')
+        ftp.retrbinary('RETR ' + midia, arqLocal.write, 1024)
+        arqLocal.close()
+    os.chdir(tmp_a)
+    ftp.quit()

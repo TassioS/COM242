@@ -76,8 +76,8 @@ def main():
     pyroProcess = multiprocessing.Process(target = iniciaPyroServer)
     pyroProcess.start()
     
-    #ftpProcess = multiprocessing.Process(target = iniciaFtpServer)
-    #ftpProcess.start()
+    ftpProcess = multiprocessing.Process(target = iniciaFtpServer)
+    ftpProcess.start()
 
     
     #ftpProcess.join()
@@ -85,6 +85,7 @@ def main():
     window.mainloop()
     #pyroProcess.join()
     pyroProcess.terminate()
+    ftpProcess.terminate()
 #Define a função main
 if __name__ == "__main__":
     main()

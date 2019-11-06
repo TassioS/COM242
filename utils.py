@@ -98,8 +98,8 @@ def selecionaMidia(filial):
 
 def baixaMidia(nomeMidia,filial):
     ftp = FTP('')
-    ftp.connect('localhost',1026)
-    ftp.login()
+    ftp.connect(filial['ip'],filial['pyroPort'])
+    ftp.login(getIP(),'')
     
     tmp_a = os.getcwd()
     os.chdir(abrirJson['filial'][getFilialPos]['diretorio'])

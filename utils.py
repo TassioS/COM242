@@ -97,12 +97,15 @@ def selecionaMidia(filial):
     print(filial)
 
 def baixaMidia(nomeMidia,filial):
+    print("teste")
     ftp = FTP('')
-    ftp.connect(filial['ip'],filial['pyroPort'])
+    print("teste")
+    ftp.connect(filial['ip'],filial['ftpPort'])
+    print("teste")
     ftp.login(getIP(),'')
-    
+    print("teste")
     tmp_a = os.getcwd()
-    os.chdir(abrirJson['filial'][getFilialPos]['diretorio'])
+    os.chdir(abrirJson()['filial'][getFilialPos()]['diretorio'])
     for midia in nomeMidia:
         arqLocal = open(midia, 'wb')
         ftp.retrbinary('RETR ' + midia, arqLocal.write, 1024)

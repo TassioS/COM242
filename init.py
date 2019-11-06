@@ -58,7 +58,8 @@ def midias():
     Label(windowFilial, text="Midias disponíveis").pack()
     jsonL = utils.abrirJson()['filial']
     for filial in jsonL:
-        Button(windowFilial,text= filial['name'],command=lambda arg=filial,arg1=windowFilial: exibeMidia(arg,arg1)).pack()
+        if filial['ip'] != utils.getIP():
+            Button(windowFilial,text= filial['name'],command=lambda arg=filial,arg1=windowFilial: exibeMidia(arg,arg1)).pack()
     windowFilial.mainloop()
 
 
